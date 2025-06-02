@@ -311,7 +311,7 @@ img {
 }
 
 .home__title{
-    font-size: var(--big-font-size);
+    font-size: var(--h1-font-size);
 }
 
 .home__subtitle{
@@ -514,15 +514,15 @@ img {
     width: 80%;
 }
 .skills__js{
-    width: 65%;
+    width: 75%;
 }
 
 .skills__react{
-    width: 85%;
+    width: 80%;
 }
 
 .skills__php{
-    width: 80%;
+    width: 40%;
 }
 
 .skills__node{
@@ -540,15 +540,15 @@ img {
 }
 
 .skills__figma{
-    width: 90%;
+    width: 50%;
 }
 
 .skills__sketch{
-    width: 85%;
+    width: 45%;
 }
 
 .skills__photoshop{
-    width: 85%;
+    width: 35%;
 }
 
 .skills__close .skills__list{
