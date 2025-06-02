@@ -22,6 +22,9 @@
     --container-color: #fff;
     --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
     --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
+    --body-color-rgb: 249, 246, 255;
+    --container-color-rgb: 255, 255, 255;
+    --first-color-rgb: 105, 56, 245; /* Added RGB variable for --first-color */
 
     /*========== Font and typography ==========*/
     --body-font: 'SF Pro Rounded', sans-serif;
@@ -79,6 +82,9 @@ body.dark-theme{
     --container-color: hsl(var(--hue-color), 29%, 16%);
     --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
     --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
+    --body-color-rgb: 33, 29, 42;
+    --container-color-rgb: 48, 42, 54;
+    --first-color-rgb: 105, 56, 245; /* Added RGB variable for dark theme */
 }
 
 /*========== Button Dark/Light ==========*/
@@ -172,10 +178,12 @@ img {
 .header {
   width: 100%;
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   z-index: var(--z-fixed);
-  background-color: var(--body-color);
+  background-color: rgba(var(--body-color-rgb, 249, 246, 255), 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /*==================== NAV ====================*/
@@ -209,57 +217,95 @@ img {
 @media screen and (max-width: 767px){
     .nav__menu{
         position: fixed;
-        bottom: -100%;
-        left: 0;
-        /*right: 0;*/
-        width: 100%;
-        /*height: auto;*/
-        background-color: var(--body-color);
-        padding: 2rem 1.5rem 4rem;
-        box-shadow: 0 -1px 4px rgba(0, 0, 0, .15);
-        border-radius: 1.5rem 1.5rem 0 0;
-        transition: .3s;
+        top: var(--header-height);
+        right: -100%; /* Start off-screen to the right */
+        left: initial; /* Remove left positioning */
+        width: 55%; /* Reduced sidebar width */
+        height: calc(99vh - var(--header-height)); /* Full height below header */
+        background-color: rgba(119, 81, 207, 0.913);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(10px); /* For Safari */
+        padding: 2rem 1.5rem; /* Adjusted padding */
+        box-shadow: -4px 0px 6px rgba(0, 0, 0, .15); /* Adjusted shadow for sidebar on the left */
+        border-radius: 0.7rem 0 0 0.7rem; /* Rounded corners on the left */
+        transition: .6s; /* Add transition for sliding effect */
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        z-index: 1000;
     }
-}
 
-.nav__list{
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    .nav__list{
+        grid-template-columns: 2fr; /* Single column for vertical list */
+        row-gap: 1rem; /* Increased gap for vertical list */
+        padding-top: 1rem; /* Add padding to the top of the list */
+    }
+
+    .nav__link{
+        display: flex; /* Use flexbox */
+        flex-direction: column; /* Arrange icon and text horizontally */
+        gap: 1rem;
+        align-items: center; /* Vertically align icon and text */
+        font-size: 1.1rem; /* Adjust font size for better readability */
+        color: var(--title-color);
+        font-weight: var(--font-medium);
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        transition: background 0.6s;
+        text-decoration: none;
+    }
+
+    .nav__icon{
+         margin-right: var(--mb-0-5); /* Add space between icon and text */
+         font-size: 1.2rem; /* Keep icon size */
+         color: var(--text-color-light); /* Adjust icon color for contrast */
+    }
+
+    .nav__close{
+        position: absolute;
+        top: 1.1rem; /* Adjusted position */
+        left: 1.5rem; /* Position on the left */
+        right: initial; /* Remove right positioning */
+        font-size: 1.6rem;
+        cursor: pointer;
+        color: var(--text-color-light); /* Adjust close icon color for contrast */
+        z-index: var(--z-fixed); /* Ensure close icon is above overlay */
+    }
+
+    /* Adjust color of links and icons in the open sidebar */
+    .nav__menu.show-menu .nav__link,
+    .nav__menu.show-menu .nav__icon {
+        color: var(--container-color); /* Change color to white or light color when sidebar is open */
+    }
 }
 
 .nav__link{
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: var(--small-font-size);
+    font-size: 1.1rem;
     color: var(--title-color);
     font-weight: var(--font-medium);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background 0.6s;
+    text-decoration: none;
+
 }
 
 .nav__link:hover{
-    color: var(--first-color);
+    background-color: rgba(255, 255, 255, 0.1);
+    /*color: var(--first-color);*/
 }
 
 .nav__icon{
-    font-size: 1.4rem;
-}
-
-.nav__close{
-    position: absolute;
-    right: 1.1rem;
-    bottom: .3rem;
-    font-size: 1.6rem;
-    cursor: pointer;
-    color: var(--first-color);
-}
-
-.nav__close:hover{
-    color: var(--first-color-alt);
+    font-size: 1.2rem;
 }
 
 /* show menu */
 .nav__menu.show-menu{
-    bottom: 0;
+    right: 0; /* Slide in from the right */
+    left: initial; /* Remove left positioning */
 }
 
 /* Active link */
@@ -442,7 +488,7 @@ img {
 
 /*==================== SKILLS ====================*/
 .skills__container{
-    row-gap: 0;
+    /* Removed row-gap: 0; to use default grid gap */
 }
 
 .skills__header{
@@ -562,6 +608,15 @@ img {
 
 .skills__open .skills__arrow{
     transform: rotate(-180deg);
+}
+
+.skills__content {
+    background-color: rgba(var(--container-color-rgb, 255, 255, 255), 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: .5rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 /*==================== QUALIFICATION ====================*/
 .qualification__tabs{
@@ -1273,6 +1328,53 @@ img {
     }
     .contact__inputs{
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/*==================== ANIMATIONS ====================*/
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/*==================== SIDEBAR OVERLAY ====================*/
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: var(--z-tooltip);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-overlay.show-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Adjust main content margin when header is fixed on larger screens */
+@media screen and (min-width: 768px) {
+  .main {
+    margin-top: calc(var(--header-height) + 1.5rem);
+  }
+}
+
+/* Ensure content below fixed header is visible on small screens */
+@media screen and (max-width: 767px) {
+    .main {
+        margin-top: var(--header-height);
     }
 }
 
