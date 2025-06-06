@@ -1431,6 +1431,143 @@ img {
     }
 }
 
+/* === Custom Portfolio Card with Blurred Gradient Overlay === */
+.custom-card {
+  position: relative;
+  width: 320px;
+  height: 480px;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 6px rgba(0,0,0,0.10);
+  background: #18181b;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 0 auto;
+}
+.custom-card__img-wrapper {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+.custom-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.custom-card__gradient-blur::before,
+.custom-card__gradient-blur::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  width: 100%;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+
+.custom-card__gradient-blur::before {
+  height: 35%;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  background: rgba(60, 60, 90, 0.28);
+  transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+}
+
+.custom-card__gradient-blur::after {
+  height: 55%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(to top, rgba(20, 20, 30, 0.22) 0%, transparent 100%);
+  transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+}
+.custom-card__body {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 3;
+  padding: 2.2rem 1.7rem 1.7rem 1.7rem;
+  color: #fff;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.32), 0 1px 2px rgba(0,0,0,0.18);
+  animation: cardFadeIn 1s cubic-bezier(.4,0,.2,1);
+  font-size: 1.08rem;
+}
+.custom-card__body .portfolio__title {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+.custom-card__body .portfolio__description {
+  font-size: 1.13rem;
+  line-height: 1.5;
+  margin-bottom: 1.1rem;
+  word-break: break-word;
+}
+@media (max-width: 400px) {
+  .custom-card {
+    width: 95vw;
+    height: 70vw;
+    min-height: 340px;
+    min-width: 220px;
+  }
+  .custom-card__body {
+    font-size: 0.98rem;
+    padding: 1.2rem 0.7rem 1.1rem 0.7rem;
+  }
+  .custom-card__body .portfolio__title {
+    font-size: 1.2rem;
+  }
+  .custom-card__body .portfolio__description {
+    font-size: 0.98rem;
+  }
+}
+
+/* Overlay fade-in animation */
+.custom-card__gradient-blur::before,
+.custom-card__gradient-blur::after {
+  opacity: 0;
+  animation: overlayFadeIn 1.2s 0.2s forwards cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes overlayFadeIn {
+  to { opacity: 1; }
+}
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.custom-card__body .portfolio__button {
+  align-self: flex-start;
+  background: #fff;
+  color: var(--first-color);
+  font-size: 0.98rem;
+  font-weight: 600;
+  border-radius: 5rem;
+  padding: 0.9rem 1.2rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.3s, color 0.3s;
+  border: none;
+}
+.custom-card__body .portfolio__button:hover {
+  background: var(--first-color);
+  color: #fff;
+}
+.custom-card__body .portfolio__button .button__icon {
+  color: inherit;
+  font-size: 1.1em;
+  margin-left: 0.4em;
+}
+
 
 
 
